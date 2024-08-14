@@ -1,0 +1,200 @@
+# Arquivo Excel -----------------------------------------------------------
+
+aba <- "Produção Assessores"
+
+wb <- createWorkbook()
+addWorksheet(wb, aba , gridLines = FALSE)
+writeData(wb,sheet =  aba , producao)
+
+header <- openxlsx::createStyle(
+  fgFill = "#D9D9D9",
+  wrapText = T,
+  textDecoration = "bold",
+  halign = "center",
+  valign = "center",
+  border = "TopBottom"
+)
+openxlsx::addStyle(wb, aba, 
+                   style = header, 
+                   rows = 1, 
+                   cols = 1:27,
+                   gridExpand = T)
+
+openxlsx::addStyle(wb, aba, 
+                   style = createStyle(numFmt = 'mmm/yy'), 
+                   rows = 2:(nrow(producao)+1), 
+                   cols = 1, 
+                   stack = T,
+                   gridExpand = T)
+
+openxlsx::addStyle(wb, aba, 
+                   style = createStyle(
+                     numFmt = '_-* #,##0.00_-;-* #,##0.00_-;_-* "-"_-;_-@_-'),
+                   rows = 2:(nrow(producao)+1),
+                   cols = 4:23,
+                   stack = T,
+                   gridExpand = T)
+
+openxlsx::addStyle(wb, aba, 
+                   style = createStyle(
+                     numFmt = '_-* #,##0.00_-;-* #,##0.00_-;_-* "-"_-;_-@_-'),
+                   rows = 2:(nrow(producao)+1),
+                   cols = 26:27,
+                   stack = T,
+                   gridExpand = T)
+
+openxlsx::addStyle(wb, aba, 
+                   style = createStyle(
+                     border = "Bottom", 
+                     borderStyle = "medium", 
+                     valign = "bottom"),
+                   rows = (nrow(producao)+1), 
+                   cols = 1:3, 
+                   stack = T, 
+                   gridExpand = T)
+
+openxlsx::addStyle(wb, aba, 
+                   style = createStyle(
+                     border = "Bottom", 
+                     borderStyle = "medium",
+                     numFmt = '_-* #,##0.00_-;-* #,##0.00_-;_-* "-"_-;_-@_-', 
+                     valign = "bottom"),
+                   rows = (nrow(producao)+1), 
+                   cols = c(4:23, 26:27), 
+                   stack = T, 
+                   gridExpand = T)
+
+openxlsx::addStyle(wb, aba, 
+                   style = createStyle(
+                     border = "Bottom", 
+                     borderStyle = "medium",
+                     numFmt = 'general', 
+                     valign = "bottom"),
+                   rows = (nrow(producao)+1), 
+                   cols = 24:25, 
+                   stack = T, 
+                   gridExpand = T)
+
+header1 <- createStyle(
+  wrapText = T,
+  halign = "center",
+  valign = "center",
+  border = "Bottom",
+  borderStyle = "medium"
+)
+
+# Bordas Colunas ----------------------------------------------------------
+openxlsx::addStyle(wb, aba,
+         style = createStyle(
+           numFmt = '_-* #,##0.00_-;-* #,##0.00_-;_-* "-"_-;_-@_-',
+                             border = "left",
+                             borderStyle = "medium"),
+         rows = 1:(nrow(producao)+1), 
+         cols = 4,
+         stack = T,
+         gridExpand = T)
+
+openxlsx::addStyle(wb, aba,
+         style = createStyle(
+           numFmt = '_-* #,##0.00_-;-* #,##0.00_-;_-* "-"_-;_-@_-',
+                             border = "left",
+                             borderStyle = "medium"),
+         rows = 1:(nrow(producao)+1), 
+         cols = 6,
+         stack = T,
+         gridExpand = T)
+
+openxlsx::addStyle(wb, aba,
+         style = createStyle(
+           numFmt = '_-* #,##0.00_-;-* #,##0.00_-;_-* "-"_-;_-@_-',
+                             border = "right",
+                             borderStyle = "medium"),
+         rows = 1:(nrow(producao)+1), 
+         cols = 8,
+         stack = T,
+         gridExpand = T)
+
+openxlsx::addStyle(wb, aba,
+         style = createStyle(
+           numFmt = '_-* #,##0.00_-;-* #,##0.00_-;_-* "-"_-;_-@_-',
+                             border = "right",
+                             borderStyle = "medium"),
+         rows = 1:(nrow(producao)+1), 
+         cols = 14,
+         stack = T,
+         gridExpand = T)
+
+
+# Linhas Colunas ----------------------------------------------------------
+
+openxlsx::addStyle(wb, aba,
+         style = createStyle(
+           border = "left",
+                             borderStyle = "medium"),
+         rows = 1:(nrow(producao)+1),
+         cols = 20,
+         stack = T,
+         gridExpand = T)
+
+openxlsx::addStyle(wb, aba,
+         style = createStyle(
+           numFmt = 'general',
+                             border = "left",
+                             borderStyle = "medium"),
+         rows = 1:(nrow(producao)+1), 
+         cols = 24,
+         stack = T,
+         gridExpand = T)
+
+openxlsx::addStyle(wb, aba,
+                   style = createStyle(
+                     numFmt = '_-* #,##0.00_-;-* #,##0.00_-;_-* "-"_-;_-@_-',
+                                       border = "right",
+                                       borderStyle = "medium"),
+                   rows = 1:(nrow(producao)+1), 
+                   cols = 27,
+                   stack = T,
+                   gridExpand = T)
+
+openxlsx::addStyle(wb, aba, 
+         style = header1,
+         rows = 1, 
+         cols = 1:ncol(producao),
+         stack = T,
+         gridExpand = T)
+
+
+# Alt Coluna Lag Linha ----------------------------------------------------
+
+openxlsx::setRowHeights(wb, aba, rows = 1, heights = 44.25)
+openxlsx::setColWidths(wb, aba, cols = 1, widths = 11.89)
+openxlsx::setColWidths(wb, aba, cols = 2, widths = 27.56)
+openxlsx::setColWidths(wb, aba, cols = 3, widths = 10.33)
+openxlsx::setColWidths(wb, aba, cols = 4, widths = 13.44)
+openxlsx::setColWidths(wb, aba, cols = 5, widths = 10.78)
+openxlsx::setColWidths(wb, aba, cols = 6, widths = 13.44)
+openxlsx::setColWidths(wb, aba, cols = 7, widths = 13.22)
+openxlsx::setColWidths(wb, aba, cols = 8, widths = 13.44)
+openxlsx::setColWidths(wb, aba, cols = 9, widths = 14.11)
+openxlsx::setColWidths(wb, aba, cols = 10, widths = 10.22)
+openxlsx::setColWidths(wb, aba, cols = 11:12, widths = 9.78)
+openxlsx::setColWidths(wb, aba, cols = 13, widths = 8.78)
+openxlsx::setColWidths(wb, aba, cols = 14, widths = 10.11)
+openxlsx::setColWidths(wb, aba, cols = 15:16, widths = 9.56)
+openxlsx::setColWidths(wb, aba, cols = 17, widths = 13.22)
+openxlsx::setColWidths(wb, aba, cols = 18, widths = 9.11)
+openxlsx::setColWidths(wb, aba, cols = 19, widths = 10.78)
+openxlsx::setColWidths(wb, aba, cols = 20, widths = 12.56)
+openxlsx::setColWidths(wb, aba, cols = 21, widths = 12.67)
+openxlsx::setColWidths(wb, aba, cols = 22, widths = 12.56)
+openxlsx::setColWidths(wb, aba, cols = 23, widths = 14.22)
+openxlsx::setColWidths(wb, aba, cols = 24:25, widths = 6.89)
+openxlsx::setColWidths(wb, aba, cols = 26:27, widths = 12.11)
+
+openxlsx::freezePane(wb, aba, firstActiveCol = 4, firstActiveRow = 2)
+
+
+saveWorkbook(wb,"C:/Users/carlo/OneDrive/doc/Produção Assessores_testes.xlsx",overwrite = T)
+
+
+
