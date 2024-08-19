@@ -1,0 +1,58 @@
+######## PACOTES ############
+
+library(openxlsx)
+library(dplyr)
+library(pins)
+library(tidyr)
+library(zoo)
+library(readxl)
+library(stringr)
+rm(list = ls())
+
+#### Conectando com as Bases ####
+board <- board_folder("C:\\Users\\carlo\\OneDrive\\Base_Dados\\Base_Dados")
+
+pin_read(board, "custodia_mesa") %>% 
+  filter(!is.na(Operador)) %>% 
+  select(
+    -Suitability,
+    -'Cod Matriz',
+    -Matriz,
+    -'Data Emissão'
+  ) %>% 
+ filter(`7RD Escritorio` == "Natal",
+        Ativo == 'BOVAT125') -> tbl
+
+wb <- openxlsx::createWorkbook()
+
+openxlsx::addWorksheet(wb, sheetName = "Custódia")
+
+openxlsx::writeData(wb, 
+                    sheet = "Custódia",
+                    tbl, 
+                    startCol = "A",
+                    startRow = 1, 
+                    colNames = T)
+
+openxlsx::addFilter(wb, "Custódia", row = 1, cols = 1:ncol(tbl))
+
+openxlsx::setColWidths(wb, "Custódia", cols = 1, widths = 8.22)
+openxlsx::setColWidths(wb, "Custódia", cols = 2, widths = 7.67)
+openxlsx::setColWidths(wb, "Custódia", cols = 3, widths = 12.40)
+openxlsx::setColWidths(wb, "Custódia", cols = 4, widths = 7.11)
+openxlsx::setColWidths(wb, "Custódia", cols = 5, widths = 10.33)
+openxlsx::setColWidths(wb, "Custódia", cols = 6, widths = 11.56)
+openxlsx::setColWidths(wb, "Custódia", cols = 7, widths = 11.33)
+openxlsx::setColWidths(wb, "Custódia", cols = 8, widths = 13.00)
+openxlsx::setColWidths(wb, "Custódia", cols = 9, widths = 16.00)
+openxlsx::setColWidths(wb, "Custódia", cols = 10, widths = 17.33)
+openxlsx::setColWidths(wb, "Custódia", cols = 11, widths = 11.56)
+openxlsx::setColWidths(wb, "Custódia", cols = 12, widths = 53.10)
+openxlsx::setColWidths(wb, "Custódia", cols = 13, widths = 10.11)
+openxlsx::setColWidths(wb, "Custódia", cols = 14, widths = 26.40)
+openxlsx::setColWidths(wb, "Custódia", cols = 15, widths = 12.20)
+openxlsx::setColWidths(wb, "Custódia", cols = 16, widths = 23.00)
+openxlsx::setColWidths(wb, "Custódia", cols = 17, widths = 7.89)
+
+
+openxlsx::saveWorkbook(wb, "C:/Users/carlo/OneDrive/doc/Custodia_RV.xlsx", overwrite = T)
